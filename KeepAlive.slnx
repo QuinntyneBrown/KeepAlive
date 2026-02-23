@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/KeepAlive.Cli/KeepAlive.Cli.csproj" />
+  </Folder>
+</Solution>
