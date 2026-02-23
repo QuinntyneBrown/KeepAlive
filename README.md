@@ -1,5 +1,8 @@
 # KeepAlive
 
+[![NuGet](https://img.shields.io/nuget/v/QuinntyneBrown.KeepAlive.Cli.svg)](https://www.nuget.org/packages/QuinntyneBrown.KeepAlive.Cli)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/QuinntyneBrown.KeepAlive.Cli.svg)](https://www.nuget.org/packages/QuinntyneBrown.KeepAlive.Cli)
+
 A Windows CLI tool that prevents the system from sleeping and maintains Microsoft Teams presence.
 
 ## How It Works
@@ -10,21 +13,18 @@ A Windows CLI tool that prevents the system from sleeping and maintains Microsof
 ## Prerequisites
 
 - Windows 10/11
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [.NET 9 Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) (or SDK)
 
 ## Installation
-
-### As a global .NET tool
 
 ```bash
 dotnet tool install --global QuinntyneBrown.KeepAlive.Cli
 ```
 
-### From local source
+### Update
 
 ```bash
-dotnet pack
-dotnet tool install --global --add-source src/KeepAlive.Cli/nupkg QuinntyneBrown.KeepAlive.Cli
+dotnet tool update --global QuinntyneBrown.KeepAlive.Cli
 ```
 
 ### Uninstall
@@ -73,10 +73,19 @@ Default settings can be changed in `appsettings.json` alongside the tool binary:
 
 Command-line options override `appsettings.json` values.
 
-## Build
+## Building from Source
 
 ```bash
+git clone https://github.com/QuinntyneBrown/KeepAlive.git
+cd KeepAlive
 dotnet build
+```
+
+### Install from local build
+
+```bash
+dotnet pack
+dotnet tool install --global --add-source src/KeepAlive.Cli/nupkg QuinntyneBrown.KeepAlive.Cli
 ```
 
 ## Project Structure
@@ -91,3 +100,7 @@ src/
     NativeMethods.cs      # Win32 P/Invoke declarations
     appsettings.json      # Default configuration
 ```
+
+## License
+
+[MIT](LICENSE)
