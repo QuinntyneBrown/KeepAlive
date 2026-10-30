@@ -17,9 +17,12 @@ A cross-platform CLI tool (Windows and macOS) that prevents the system from slee
 - Windows 10/11 or macOS
 - [.NET 9 Runtime](https://dotnet.microsoft.com/download/dotnet/9.0) (or SDK)
 
-> **macOS note:** posting synthetic key events may require your terminal app to be allowed under
-> **System Settings → Privacy & Security → Accessibility** (or **Input Monitoring**). Sleep prevention
-> works without any permission.
+> **macOS note:** posting synthetic key events requires your terminal app (Terminal, iTerm, VS Code, …)
+> to be allowed under **System Settings → Privacy & Security → Accessibility**. On first run KeepAlive asks
+> macOS to show the standard Accessibility prompt; until access is granted, sleep prevention still works but
+> keypresses are skipped (so Teams may still show you as Away). Once you grant access, keypresses start
+> automatically and a log line confirms it. If the prompt doesn't appear, open the pane directly with
+> `open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"`.
 
 ## Installation
 
@@ -97,7 +100,7 @@ dotnet tool install --global --add-source src/KeepAlive.Cli/nupkg QuinntyneBrown
 ## Project Structure
 
 ```
-KeepAlive.sln
+KeepAlive.slnx
 src/
   KeepAlive.Cli/
     Program.cs            # Entry point, System.CommandLine setup, DI wiring
@@ -110,7 +113,7 @@ src/
       WindowsKeepAlive.cs           # SetThreadExecutionState + SendInput
       WindowsNativeMethods.cs       # Win32 P/Invoke declarations
       MacOSKeepAlive.cs             # IOKit power assertion + CGEvent key press
-      MacOSNativeMethods.cs         # IOKit / CoreGraphics P/Invoke declarations
+      MacOSNativeMethods.cs         # IOKit / CoreGraphics / Accessibility P/Invoke declarations
 ```
 
 ## License

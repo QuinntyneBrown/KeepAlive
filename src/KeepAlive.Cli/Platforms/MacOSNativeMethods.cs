@@ -7,6 +7,7 @@ internal static class MacOSNativeMethods
     private const string CoreFoundation = "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation";
     private const string IOKit = "/System/Library/Frameworks/IOKit.framework/IOKit";
     private const string CoreGraphics = "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics";
+    private const string ApplicationServices = "/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices";
 
     internal const uint kCFStringEncodingUTF8 = 0x08000100;
     internal const uint kIOPMAssertionLevelOn = 255;
@@ -15,6 +16,9 @@ internal static class MacOSNativeMethods
 
     /// <summary>Prevents the display (and therefore the system) from idle-sleeping.</summary>
     internal const string kIOPMAssertionTypePreventUserIdleDisplaySleep = "PreventUserIdleDisplaySleep";
+
+    /// <summary>Value of the <c>kAXTrustedCheckOptionPrompt</c> dictionary key.</summary>
+    internal const string kAXTrustedCheckOptionPrompt = "AXTrustedCheckOptionPrompt";
 
     internal const uint kCGHIDEventTap = 0;
 
@@ -28,6 +32,24 @@ internal static class MacOSNativeMethods
 
     [DllImport(CoreFoundation)]
     internal static extern void CFRelease(IntPtr cf);
+
+    [DllImport(CoreFoundation)]
+    internal static extern IntPtr CFDictionaryCreate(
+        IntPtr allocator, IntPtr[] keys, IntPtr[] values, nint numValues, IntPtr keyCallBacks, IntPtr valueCallBacks);
+
+    /// <summary>Address of an exported CoreFoundation global (e.g. <c>kCFTypeDictionaryKeyCallBacks</c>).</summary>
+    internal static IntPtr GetCoreFoundationExport(string name) =>
+        NativeLibrary.GetExport(NativeLibrary.Load(CoreFoundation), name);
+
+    // Accessibility
+
+    [DllImport(ApplicationServices)]
+    [return: MarshalAs(UnmanagedType.I1)]
+    internal static extern bool AXIsProcessTrusted();
+
+    [DllImport(ApplicationServices)]
+    [return: MarshalAs(UnmanagedType.I1)]
+    internal static extern bool AXIsProcessTrustedWithOptions(IntPtr options);
 
     // IOKit power management
 

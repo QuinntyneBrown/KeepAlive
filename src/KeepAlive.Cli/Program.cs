@@ -1,6 +1,7 @@
 using System.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var intervalOption = new Option<int?>(
     name: "--interval",
@@ -32,7 +33,8 @@ rootCommand.SetHandler(async (int? interval) =>
         builder.Services.PostConfigure<KeepAliveOptions>(
             o => o.IntervalSeconds = interval.Value);
 
-    builder.Services.AddSingleton(_ => PlatformKeepAliveFactory.Create());
+    builder.Services.AddSingleton(sp =>
+        PlatformKeepAliveFactory.Create(sp.GetRequiredService<ILoggerFactory>()));
     builder.Services.AddHostedService<KeepAliveWorker>();
 
     using var host = builder.Build();
