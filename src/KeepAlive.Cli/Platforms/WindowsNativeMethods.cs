@@ -1,6 +1,8 @@
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
-internal static class NativeMethods
+[SupportedOSPlatform("windows")]
+internal static class WindowsNativeMethods
 {
     internal const uint ES_CONTINUOUS = 0x80000000;
     internal const uint ES_SYSTEM_REQUIRED = 0x00000001;

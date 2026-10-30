@@ -20,7 +20,7 @@ Thanks for your interest in contributing to KeepAlive.
 2. Make your changes.
 3. Ensure the project builds with no warnings or errors:
    ```
-   dotnet build --warnaserrors
+   dotnet build -warnaserror
    ```
 4. Commit with a clear, descriptive message.
 5. Open a pull request against `main`.

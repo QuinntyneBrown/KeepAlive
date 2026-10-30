@@ -8,13 +8,21 @@ var intervalOption = new Option<int?>(
 intervalOption.AddAlias("-i");
 
 var rootCommand = new RootCommand(
-    "Keeps Windows alive and maintains Microsoft Teams presence")
+    "Keeps your machine awake and maintains Microsoft Teams presence")
 {
     intervalOption
 };
 
 rootCommand.SetHandler(async (int? interval) =>
 {
+    if (!PlatformKeepAliveFactory.IsSupported)
+    {
+        Console.Error.WriteLine(
+            $"KeepAlive supports Windows and macOS only. Current platform: {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+        Environment.ExitCode = 1;
+        return;
+    }
+
     var builder = Host.CreateApplicationBuilder();
 
     builder.Services.Configure<KeepAliveOptions>(
@@ -24,6 +32,7 @@ rootCommand.SetHandler(async (int? interval) =>
         builder.Services.PostConfigure<KeepAliveOptions>(
             o => o.IntervalSeconds = interval.Value);
 
+    builder.Services.AddSingleton(_ => PlatformKeepAliveFactory.Create());
     builder.Services.AddHostedService<KeepAliveWorker>();
 
     using var host = builder.Build();

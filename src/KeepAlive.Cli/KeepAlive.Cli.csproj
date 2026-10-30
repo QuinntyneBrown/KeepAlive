@@ -13,10 +13,10 @@
 
     <!-- NuGet metadata -->
     <PackageId>QuinntyneBrown.KeepAlive.Cli</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Quinntyne Brown</Authors>
-    <Description>A Windows CLI tool that prevents the system from sleeping and maintains Microsoft Teams presence by simulating periodic input.</Description>
-    <PackageTags>keepalive;windows;teams;presence;cli;dotnet-tool</PackageTags>
+    <Description>A cross-platform (Windows and macOS) CLI tool that prevents the system from sleeping and maintains Microsoft Teams presence by simulating periodic input.</Description>
+    <PackageTags>keepalive;windows;macos;teams;presence;cli;dotnet-tool</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/QuinntyneBrown/KeepAlive</PackageProjectUrl>
